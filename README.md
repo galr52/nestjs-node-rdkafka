@@ -1,4 +1,4 @@
-# nestjs-rdkafka
+# nestjs-node-rdkafka
 
 A lightweight NestJS module for consuming Kafka messages using `node-rdkafka`, with a decorator-based API inspired by `@EventPattern`.
 
