@@ -9,10 +9,12 @@ export class KafkaModule {
     if (!options.connector && !options.consumerConfig) {
       throw new Error('consumerConfig is required when using the default connector');
     }
-    const connector = options.connector || new NodeRdKafkaConnector({
-      consumerConfig: options.consumerConfig!,
-      topicConfig: options.topicConfig,
-    });
+    const connector =
+      options.connector ||
+      new NodeRdKafkaConnector({
+        consumerConfig: options.consumerConfig!,
+        topicConfig: options.topicConfig,
+      });
 
     return {
       module: KafkaModule,

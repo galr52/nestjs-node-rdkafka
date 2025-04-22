@@ -1,4 +1,3 @@
-import { Test } from '@nestjs/testing';
 import { KafkaModule } from '../../kafka.module';
 import { KafkaConsumerService } from '../../kafka-consumer.service';
 import { NodeRdKafkaConnector } from '../../connectors/node-rdkafka.connector';
@@ -54,4 +53,4 @@ describe('KafkaModule', () => {
       });
     });
   });
-}); 
+});

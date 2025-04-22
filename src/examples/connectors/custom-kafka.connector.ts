@@ -1,4 +1,8 @@
-import { IKafkaConnector, KafkaConnectorConfig, KafkaMessage } from '../../interfaces/kafka-connector.interface';
+import {
+  IKafkaConnector,
+  KafkaConnectorConfig,
+  KafkaMessage,
+} from '../../interfaces/kafka-connector.interface';
 
 // This is just an example of how to implement a custom connector
 export class CustomKafkaConnector implements IKafkaConnector {
@@ -39,8 +43,8 @@ export class CustomKafkaConnector implements IKafkaConnector {
             topic,
             value: JSON.stringify({
               timestamp: new Date().toISOString(),
-              data: `Mock message for ${topic}`
-            })
+              data: `Mock message for ${topic}`,
+            }),
           };
           this.messageHandler?.(mockMessage);
         });
@@ -55,4 +59,4 @@ export class CustomKafkaConnector implements IKafkaConnector {
   onError(handler: (error: Error) => void): void {
     this.errorHandler = handler;
   }
-} 
+}

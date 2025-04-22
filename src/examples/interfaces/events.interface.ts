@@ -29,4 +29,4 @@ export interface NotificationEvent {
   };
   priority: 'low' | 'medium' | 'high';
   timestamp: string;
-} 
+}

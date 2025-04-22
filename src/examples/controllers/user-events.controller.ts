@@ -38,4 +38,4 @@ export class UserEventsController {
       this.logger.error('Failed to process user deletion event', error);
     }
   }
-} 
+}

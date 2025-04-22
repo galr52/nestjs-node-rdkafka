@@ -8,7 +8,7 @@ const mockKafkaConsumer = {
     }
     return Promise.resolve();
   }),
-  disconnect: jest.fn().mockImplementation((cb) => {
+  disconnect: jest.fn().mockImplementation(cb => {
     if (typeof cb === 'function') {
       cb();
     }
@@ -42,10 +42,7 @@ describe('NodeRdKafkaConnector', () => {
   describe('connect', () => {
     it('should create and connect a Kafka consumer', async () => {
       await connector.connect();
-      expect(KafkaConsumer).toHaveBeenCalledWith(
-        mockConfig.consumerConfig,
-        mockConfig.topicConfig
-      );
+      expect(KafkaConsumer).toHaveBeenCalledWith(mockConfig.consumerConfig, mockConfig.topicConfig);
     });
   });
 
@@ -83,4 +80,4 @@ describe('NodeRdKafkaConnector', () => {
       expect(mockKafkaConsumer.on).toHaveBeenCalledWith('event.error', expect.any(Function));
     });
   });
-}); 
+});

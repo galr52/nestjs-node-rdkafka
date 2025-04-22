@@ -35,10 +35,6 @@ import { CustomKafkaConnector } from './connectors/custom-kafka.connector';
       handlers: [OrderEventsController, NotificationEventsController],
     }),
   ],
-  controllers: [
-    UserEventsController,
-    OrderEventsController,
-    NotificationEventsController,
-  ],
+  controllers: [UserEventsController, OrderEventsController, NotificationEventsController],
 })
-export class ExampleModule {} 
+export class ExampleModule {}

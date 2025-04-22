@@ -83,7 +83,9 @@ describe('KafkaConsumerService', () => {
       const messageHandler = mockConnector.onMessage.mock.calls[0][0];
       await messageHandler(mockMessage);
 
-      expect(mockModuleRef.get).toHaveBeenCalledWith(mockHandlers[0].constructor, { strict: false });
+      expect(mockModuleRef.get).toHaveBeenCalledWith(mockHandlers[0].constructor, {
+        strict: false,
+      });
       expect(mockHandlers[0].handleMessage).toHaveBeenCalledWith('test message');
     });
   });
@@ -94,4 +96,4 @@ describe('KafkaConsumerService', () => {
       expect(mockConnector.disconnect).toHaveBeenCalled();
     });
   });
-}); 
+});

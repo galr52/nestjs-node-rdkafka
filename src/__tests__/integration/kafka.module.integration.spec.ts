@@ -1,7 +1,6 @@
 import { Test } from '@nestjs/testing';
 import { KafkaModule } from '../../kafka.module';
 import { KafkaConsumerService } from '../../kafka-consumer.service';
-import { NodeRdKafkaConnector } from '../../connectors/node-rdkafka.connector';
 import { TestingModule } from '@nestjs/testing';
 
 class TestHandler {
@@ -38,4 +37,4 @@ describe('KafkaModule Integration', () => {
     expect(consumerService).toBeDefined();
     // Add more integration tests here
   });
-}); 
+});

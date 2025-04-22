@@ -21,9 +21,7 @@ export class OrderEventsController {
   handleOrderStatusUpdate(message: string) {
     try {
       const orderData: OrderEvent = JSON.parse(message);
-      this.logger.log(
-        `Order ${orderData.orderId} status changed to ${orderData.status}`
-      );
+      this.logger.log(`Order ${orderData.orderId} status changed to ${orderData.status}`);
       // Add your business logic here
     } catch (error) {
       this.logger.error('Failed to process order status update', error);
@@ -34,9 +32,9 @@ export class OrderEventsController {
     // Simulate some async processing
     await new Promise(resolve => setTimeout(resolve, 100));
     this.logger.log(`Processed order ${orderData.orderId} for user ${orderData.userId}`);
-    
+
     // Calculate order summary
     const itemCount = orderData.items.reduce((sum, item) => sum + item.quantity, 0);
     this.logger.log(`Order summary: ${itemCount} items, total: $${orderData.totalAmount}`);
   }
-} 
+}

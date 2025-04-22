@@ -11,7 +11,7 @@ export class NotificationEventsController {
     try {
       const notification: NotificationEvent = JSON.parse(message);
       this.logger.log(
-        `Processing email notification: ${notification.content.subject} to ${notification.recipient}`
+        `Processing email notification: ${notification.content.subject} to ${notification.recipient}`,
       );
       await this.sendEmail(notification);
     } catch (error) {
@@ -23,9 +23,7 @@ export class NotificationEventsController {
   async handleSMSNotification(message: string) {
     try {
       const notification: NotificationEvent = JSON.parse(message);
-      this.logger.log(
-        `Processing SMS notification to ${notification.recipient}`
-      );
+      this.logger.log(`Processing SMS notification to ${notification.recipient}`);
       await this.sendSMS(notification);
     } catch (error) {
       this.logger.error('Failed to process SMS notification', error);
@@ -36,9 +34,7 @@ export class NotificationEventsController {
   async handlePushNotification(message: string) {
     try {
       const notification: NotificationEvent = JSON.parse(message);
-      this.logger.log(
-        `Processing push notification to ${notification.recipient}`
-      );
+      this.logger.log(`Processing push notification to ${notification.recipient}`);
       await this.sendPushNotification(notification);
     } catch (error) {
       this.logger.error('Failed to process push notification', error);
@@ -62,4 +58,4 @@ export class NotificationEventsController {
     await new Promise(resolve => setTimeout(resolve, 30));
     this.logger.log(`Push notification sent to ${notification.recipient}`);
   }
-} 
+}

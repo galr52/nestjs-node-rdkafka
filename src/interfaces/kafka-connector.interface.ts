@@ -19,4 +19,4 @@ export interface IKafkaConnector {
   subscribe(topics: string[]): Promise<void>;
   onMessage(handler: (message: KafkaMessage) => Promise<void>): void;
   onError(handler: (error: Error) => void): void;
-} 
+}

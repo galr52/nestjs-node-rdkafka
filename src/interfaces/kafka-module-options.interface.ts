@@ -5,4 +5,4 @@ export interface KafkaModuleOptions {
   consumerConfig?: Record<string, any>;
   topicConfig?: Record<string, any>;
   handlers: any[];
-} 
+}

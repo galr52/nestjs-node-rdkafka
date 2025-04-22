@@ -1,9 +1,4 @@
-import {
-  Inject,
-  Injectable,
-  OnModuleDestroy,
-  OnModuleInit,
-} from '@nestjs/common';
+import { Inject, Injectable, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
 import { ModuleRef } from '@nestjs/core';
 import { IKafkaConnector } from './interfaces/kafka-connector.interface';
 import { getKafkaHandlers } from './registry';
@@ -21,8 +16,8 @@ export class KafkaConsumerService implements OnModuleInit, OnModuleDestroy {
     const topics = Object.keys(topicToHandler);
 
     await this.connector.connect();
-    
-    this.connector.onMessage(async (message) => {
+
+    this.connector.onMessage(async message => {
       const topic = message.topic;
       const payload = message.value?.toString();
       const handlerInfo = topicToHandler[topic];
@@ -35,7 +30,7 @@ export class KafkaConsumerService implements OnModuleInit, OnModuleDestroy {
       }
     });
 
-    this.connector.onError((error) => {
+    this.connector.onError(error => {
       console.error('Kafka error:', error);
     });
 

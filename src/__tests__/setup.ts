@@ -6,7 +6,7 @@ jest.mock('node-rdkafka', () => ({
       }
       return Promise.resolve();
     }),
-    disconnect: jest.fn().mockImplementation((cb) => {
+    disconnect: jest.fn().mockImplementation(cb => {
       if (typeof cb === 'function') {
         cb();
       }
@@ -16,4 +16,4 @@ jest.mock('node-rdkafka', () => ({
     consume: jest.fn(),
     on: jest.fn(),
   })),
-})); 
+}));
