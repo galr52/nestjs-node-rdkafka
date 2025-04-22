@@ -5,39 +5,24 @@ import {
   OnModuleInit,
 } from '@nestjs/common';
 import { ModuleRef } from '@nestjs/core';
-import { KafkaConsumer } from 'node-rdkafka';
+import { IKafkaConnector } from './interfaces/kafka-connector.interface';
 import { getKafkaHandlers } from './registry';
 
 @Injectable()
 export class KafkaConsumerService implements OnModuleInit, OnModuleDestroy {
-  private consumer!: KafkaConsumer;
-
   constructor(
     @Inject('KAFKA_HANDLER_CLASSES') private readonly handlerClasses: any[],
-    @Inject('KAFKA_MODULE_OPTIONS') private readonly options: {
-      consumerConfig: Record<string, any>;
-      topicConfig?: Record<string, any>;
-    },
+    @Inject('KAFKA_CONNECTOR') private readonly connector: IKafkaConnector,
     private readonly moduleRef: ModuleRef,
   ) {}
 
-  onModuleInit() {
+  async onModuleInit() {
     const topicToHandler = getKafkaHandlers();
     const topics = Object.keys(topicToHandler);
 
-    this.consumer = new KafkaConsumer(
-      this.options.consumerConfig,
-      this.options.topicConfig || {},
-    );
-
-    this.consumer.connect();
-
-    this.consumer.on('ready', () => {
-      this.consumer.subscribe(topics);
-      this.consumer.consume();
-    });
-
-    this.consumer.on('data', async (message) => {
+    await this.connector.connect();
+    
+    this.connector.onMessage(async (message) => {
       const topic = message.topic;
       const payload = message.value?.toString();
       const handlerInfo = topicToHandler[topic];
@@ -50,12 +35,14 @@ export class KafkaConsumerService implements OnModuleInit, OnModuleDestroy {
       }
     });
 
-    this.consumer.on('event.error', (err) => {
-      console.error('Kafka error:', err);
+    this.connector.onError((error) => {
+      console.error('Kafka error:', error);
     });
+
+    await this.connector.subscribe(topics);
   }
 
-  onModuleDestroy() {
-    this.consumer?.disconnect();
+  async onModuleDestroy() {
+    await this.connector.disconnect();
   }
 }

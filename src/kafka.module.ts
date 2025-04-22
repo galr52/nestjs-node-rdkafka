@@ -1,15 +1,16 @@
 import { Module, DynamicModule } from '@nestjs/common';
 import { KafkaConsumerService } from './kafka-consumer.service';
-
-interface KafkaModuleOptions {
-  consumerConfig: Record<string, any>;
-  topicConfig?: Record<string, any>;
-  handlers: any[];
-}
+import { KafkaModuleOptions } from './interfaces/kafka-module-options.interface';
+import { NodeRdKafkaConnector } from './connectors/node-rdkafka.connector';
 
 @Module({})
 export class KafkaModule {
   static register(options: KafkaModuleOptions): DynamicModule {
+    const connector = options.connector || new NodeRdKafkaConnector({
+      consumerConfig: options.consumerConfig,
+      topicConfig: options.topicConfig,
+    });
+
     return {
       module: KafkaModule,
       providers: [
@@ -19,8 +20,8 @@ export class KafkaModule {
           useValue: options.handlers,
         },
         {
-          provide: 'KAFKA_MODULE_OPTIONS',
-          useValue: options,
+          provide: 'KAFKA_CONNECTOR',
+          useValue: connector,
         },
         KafkaConsumerService,
       ],
