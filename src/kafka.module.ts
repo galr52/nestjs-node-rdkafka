@@ -6,8 +6,11 @@ import { NodeRdKafkaConnector } from './connectors/node-rdkafka.connector';
 @Module({})
 export class KafkaModule {
   static register(options: KafkaModuleOptions): DynamicModule {
+    if (!options.connector && !options.consumerConfig) {
+      throw new Error('consumerConfig is required when using the default connector');
+    }
     const connector = options.connector || new NodeRdKafkaConnector({
-      consumerConfig: options.consumerConfig,
+      consumerConfig: options.consumerConfig!,
       topicConfig: options.topicConfig,
     });
 

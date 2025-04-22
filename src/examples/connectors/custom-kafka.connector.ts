@@ -42,7 +42,7 @@ export class CustomKafkaConnector implements IKafkaConnector {
               data: `Mock message for ${topic}`
             })
           };
-          this.messageHandler(mockMessage);
+          this.messageHandler?.(mockMessage);
         });
       }
     }, 5000);

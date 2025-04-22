@@ -39,18 +39,18 @@ export class NodeRdKafkaConnector implements IKafkaConnector {
       if (this.messageHandler) {
         await this.messageHandler({
           topic: message.topic,
-          value: message.value,
+          value: message.value ?? Buffer.from(''),
           partition: message.partition,
           offset: message.offset,
           timestamp: message.timestamp,
-          key: message.key,
+          key: message.key ?? undefined,
         });
       }
     });
 
     this.consumer.on('event.error', (error) => {
       if (this.errorHandler) {
-        this.errorHandler(error);
+        this.errorHandler(new Error(error.message));
       }
     });
   }
